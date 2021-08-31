@@ -1,0 +1,8 @@
+// 容器盒子样式
+@mixin commonBox{
+  display: inline-block;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: #feffff;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1)
+}
