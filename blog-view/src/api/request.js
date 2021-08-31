@@ -1,6 +1,5 @@
 import axios from "axios";
-import { Loading, Message } from "element-ui";
-import router from "../router/index.js";
+import { Loading, Message } from "element-plus";
 
 let loading;
 
@@ -20,12 +19,10 @@ function endLoading() {
 axios.interceptors.request.use(
   (confing) => {
     startLoading();
-
     //设置请求头
     if (localStorage.eToken) {
       confing.headers.Authorization = localStorage.eToken;
     }
-
     return confing;
   },
   (error) => {
@@ -43,16 +40,14 @@ axios.interceptors.response.use(
   (error) => {
     Message.error(error.response.data);
     endLoading();
-
     // 获取状态码
     const { status } = error.response;
-
     if (status === 401) {
       Message.error("请重新登录");
       //清楚token
       localStorage.removeItem("eToken");
       //跳转到登录页面
-      router.push("/login");
+      this.$router.push("/login");
     }
     return Promise.reject(error);
   }

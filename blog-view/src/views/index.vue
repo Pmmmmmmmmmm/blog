@@ -25,8 +25,8 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/common.scss";
 .indexPage {
-  min-width: 100vw;
-  min-height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
   background-color: rgb(230, 245, 255);
   display: flex;
   gap: 20px;
@@ -34,12 +34,15 @@ export default {
   align-items: flex-start;
   padding: 20px;
   .left-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 20vh;
     min-width: 260px;
     @include commonBox;
   }
   .trend {
-    min-height: 60vh;
+    min-height: 160vh;
     min-width: 600px;
     @include commonBox;
   }
