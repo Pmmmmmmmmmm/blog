@@ -27,12 +27,13 @@ export default {
 .indexPage {
   min-width: 100%;
   min-height: 100%;
-  background-color: rgb(230, 245, 255);
   display: flex;
   gap: 20px;
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
+  background-color: #e6f5ff;
+
   .left-side {
     display: flex;
     justify-content: center;

@@ -1,14 +1,20 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
+  // {
+  //   path: "/",
+  //   name: "首页",
+  //   component: () =>
+  //     import(/* webpackChunkName: "about" */ "../views/index.vue"),
+  // },
   {
+    // path: "/login",
     path: "/",
-    name: "首页",
+    name: "登录",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/index.vue"),
+      import(/* webpackChunkName: "about" */ "../views/login.vue"),
   },
 ];
-
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
