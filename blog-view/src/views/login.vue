@@ -19,7 +19,7 @@
             type="passWord"
           ></el-input>
         </el-form-item>
-        <!-- <el-form-item label="验证码:" prop="verification" class="verification">
+        <el-form-item label="验证码:" prop="verification" class="verification">
           <el-input v-model="ruleForm.verification" size="medium"></el-input>
           <img
             :src="src"
@@ -27,21 +27,20 @@
             @click="getImg"
             v-show="isImgShow"
           />
-        </el-form-item> -->
+        </el-form-item>
         <div class="btn">
           <el-button type="primary" size="medium" @click="login"
-            >登录</el-button
+            >LOGIN</el-button
           >
         </div>
+        <router-link class="register" to="">register</router-link>
       </el-form>
     </div>
   </div>
 </template>
 <script>
-// import { ElLoading } from "element-plus";
-
-import axios from "axios";
-import { axiosTest } from "@/api/login.js";
+import { login, getCaptcha } from "@/api/login.js";
+import { Encrypt } from "../utils/secret.js";
 export default {
   name: "login",
   props: {},
@@ -70,11 +69,7 @@ export default {
   watch: {},
   methods: {
     getImg() {
-      axios({
-        method: "get",
-        url: "/local/login/getImg",
-        responseType: "arraybuffer",
-      })
+      getCaptcha()
         .then((response) => {
           return (
             "data:image/png;base64," +
@@ -94,13 +89,20 @@ export default {
     login() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          axios.post("/local/login/startLogin", this.ruleForm).then((res) => {
-            if (res.data.code == "0") {
-              this.$message({ message: res.data.msg, type: "success" });
-              setTimeout(() => this.$router.push("Home"), 1500);
-            } else {
-              this.$message({ message: res.data.msg, type: "error" });
+          let loginData = Encrypt(JSON.stringify(this.ruleForm));
+          login({ loginData }).then((res) => {
+            if (res.data.code === 1) {
+              sessionStorage.token = res.data.token;
+              this.$notify({
+                message: res.data.msg,
+                type: "success",
+              });
+              this.$router.push("/home");
+            } else if (res.data.code === 0) {
               this.getImg();
+              this.$notify.error({
+                message: res.data.msg,
+              });
             }
           });
         }
@@ -111,15 +113,7 @@ export default {
     },
   },
   created() {
-    axiosTest({
-      name: "pm",
-      id: "2",
-    }).then((res) => {
-      // console.log(res);
-      sessionStorage.token = res.data.token;
-    });
-
-    // this.getImg();
+    this.getImg();
   },
   mounted() {},
 };
@@ -142,21 +136,18 @@ export default {
     @include commonBox;
     .demo-ruleForm {
       height: fit-content;
-      .verification {
-        .el-form-item__content::deep {
-          display: flex;
-          align-items: center;
-          .el-input {
-            width: calc(100% - 120px);
-          }
-          .verification-img {
-            display: block;
-            margin: 0 10px;
-            width: 100px;
-            height: 25px;
-          }
+      .verification ::v-deep .el-form-item__content {
+        display: flex;
+        align-items: center;
+        .el-input {
+          flex: 1;
+        }
+        .verification-img {
+          width: 80px;
+          margin: 0 0 0 10px;
         }
       }
+
       .el-form-item {
         margin: 0 20px 20px 10px;
       }
@@ -165,6 +156,17 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        .el-button {
+          width: 85%;
+        }
+      }
+      .register {
+        display: block;
+        margin: 10px 0 0 0;
+        width: 100%;
+        font-size: 1px;
+        text-align: center;
+        text-decoration: none;
       }
     }
   }

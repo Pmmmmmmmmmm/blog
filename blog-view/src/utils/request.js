@@ -5,9 +5,9 @@ import router from "../router/index.js";
 // 请求拦截
 axios.interceptors.request.use(
   (config) => {
-
+    let noToken = ['login', 'getImg']
     let target = config.url.split('/')
-    if (target[target.length - 1] !== 'getToken') {
+    if (!noToken.includes(target[target.length - 1])) {
       //设置请求头
       if (sessionStorage.token) {
         config.headers.Authorization = sessionStorage.token;
@@ -19,8 +19,6 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-
 // 响应拦截
 axios.interceptors.response.use(
   (response) => {
