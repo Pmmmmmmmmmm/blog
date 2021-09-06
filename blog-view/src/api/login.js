@@ -17,7 +17,14 @@ export function login(data) {
 }
 export function getCaptcha() {
   return axios({
-    url: "proxy/users/getImg",
+    url: "proxy/users/getVerification",
+    method: "get",
+    responseType: "arraybuffer",
+  });
+}
+export function getBCG() {
+  return axios({
+    url: "https://source.unsplash.com/1920x1080/?code",
     method: "get",
     responseType: "arraybuffer",
   });

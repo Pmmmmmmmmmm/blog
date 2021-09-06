@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Express4 使用session",
+    "content": "Express4 使用session，成功设置后在其他接口内获取失败，跨域问题，`VUE`设置代理proxy。"
+  },
+  {
+    "title": "数据库不支持存入`emoji`",
+    "content": "后端数据库不支持存入`emoji`，前端输入之后将内容通过`encodeURIComponent`方法转码后存入数据库。"
+  },
+  {
+    "title": "展示文本",
+    "content": "展示文本，html中使用`v-html`指令，输入文本时对文本中的换行符“\n”以及‘ ’（空格）进行替换，替换为`<br/>`及`&nbsp;`"
+  },
+  {
+    "title": "检查只包含空格的字符串",
+    "content": "检查只包含空格的字符串 /^[\\s　]*$/"
+  }
+]

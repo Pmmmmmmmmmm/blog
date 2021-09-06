@@ -25,7 +25,7 @@ router.post('/getToken', async (ctx) => {
 
 
 
-router.get('/getImg', async (ctx) => {
+router.get('/getVerification', async (ctx) => {
   var code = parseInt(Math.random() * 9000 + 1000);
   // let code = 511221
   ctx.session.captcha = code;//保存在session中，便于之后的验证码判断
@@ -43,8 +43,9 @@ router.get('/getImg', async (ctx) => {
 
 router.post('/login', async ctx => {
   let { name, passWord, verification } = JSON.parse(secret.Decrypt(ctx.request.body.loginData))
+  console.log({ name, passWord, verification });
   let params
-  console.log(name == 'pm' && passWord == '123' && verification == ctx.session.captcha);
+
   if (
     name == 'pm' && passWord == '123' && verification == ctx.session.captcha
   ) {

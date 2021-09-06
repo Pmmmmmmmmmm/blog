@@ -8,7 +8,7 @@ const logger = require('koa-logger')
 const session = require('koa-session');
 const index = require('./routes/index')
 const users = require('./routes/users')
-const test = require('./routes/test')
+const text = require('./routes/text')
 app.keys = ['some secret hurr'];
 const CONFIG = {
   key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
@@ -59,7 +59,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
-app.use(test.routes(), test.allowedMethods())
+app.use(text.routes(), text.allowedMethods())
 
 
 // error-handling

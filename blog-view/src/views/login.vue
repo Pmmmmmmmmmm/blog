@@ -36,10 +36,14 @@
         <router-link class="register" to="">register</router-link>
       </el-form>
     </div>
+
+    <div class="img" :class="{ isShow: isShow }">
+      <img :src="imgSrc" alt="" />
+    </div>
   </div>
 </template>
 <script>
-import { login, getCaptcha } from "@/api/login.js";
+import { login, getCaptcha, getBCG } from "@/api/login.js";
 import { Encrypt } from "../utils/secret.js";
 export default {
   name: "login",
@@ -53,6 +57,7 @@ export default {
         verification: "",
       },
       src: "",
+      imgSrc: "",
       rules: {
         name: [{ required: true, message: "请输入用户名", trigger: "change" }],
         passWord: [
@@ -63,12 +68,13 @@ export default {
         ],
       },
       isImgShow: false,
+      isShow: false,
     };
   },
   computed: {},
   watch: {},
   methods: {
-    getImg() {
+    getCaptcha() {
       getCaptcha()
         .then((response) => {
           return (
@@ -99,21 +105,45 @@ export default {
               });
               this.$router.push("/home");
             } else if (res.data.code === 0) {
-              this.getImg();
+              this.getCaptcha();
               this.$notify.error({
                 message: res.data.msg,
               });
             }
           });
+          console.log(loginData);
         }
       });
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    getBCG() {
+      getBCG()
+        .then((response) => {
+          return (
+            "data:image/png;base64," +
+            btoa(
+              new Uint8Array(response.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ""
+              )
+            )
+          );
+        })
+        .then((data) => {
+          this.imgSrc = data; //data可以直接放到img标签的src中
+          setTimeout(() => (this.isShow = true), 0);
+        });
+    },
   },
   created() {
-    this.getImg();
+    console.log();
+    if (sessionStorage.token != undefined) {
+      this.$router.replace("/home");
+    }
+    this.getCaptcha();
+    this.getBCG();
   },
   mounted() {},
 };
@@ -121,21 +151,31 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/common.scss";
 .login-page {
-  min-width: 100vw;
+  min-width: 100%;
   min-height: 100vh;
+  overflow: hidden;
   background-color: #e6f5ff;
   display: flex;
   align-items: center;
   justify-content: center;
   .login {
-    transform: translateY(-20%);
+    flex: 1;
+    // transition: all 1s;
+    transform: translateY(-30%);
+    // max-width: 20vw;
+    // margin: 0 4vw;
+    // padding: 0 4vw;
     display: flex;
+    justify-content: center;
     align-items: center;
-    height: fit-content !important;
-    width: 300px;
-    @include commonBox;
     .demo-ruleForm {
-      height: fit-content;
+      max-width: 20vw;
+      min-width: 350px;
+      max-height: 50vh;
+      margin: 0 20px;
+      // overflow: auto;
+      // margin: 0 auto;
+      @include commonBox;
       .verification ::v-deep .el-form-item__content {
         display: flex;
         align-items: center;
@@ -167,8 +207,23 @@ export default {
         font-size: 1px;
         text-align: center;
         text-decoration: none;
+        color: #909399;
       }
     }
+  }
+  .img {
+    width: 0vw;
+
+    height: 100vh;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    & > img {
+      width: fit-content;
+      height: 100%;
+    }
+  }
+  .isShow {
+    width: 72vw;
+    transition: width 1s ease;
   }
 }
 </style>
