@@ -10,15 +10,19 @@
       </div>
     </div>
     <div class="right-side"></div>
+    <back-top />
   </div>
 </template>
 <script>
 import { getText } from "@/api/index.js";
+import backTop from "@/components/backTop.vue";
 
 export default {
   name: "indexPage",
   props: {},
-  components: {},
+  components: {
+    backTop,
+  },
   data() {
     return {
       articleList: "",
@@ -30,7 +34,6 @@ export default {
     getText() {
       getText().then((res) => {
         this.articleList = res.data.articleList;
-        // console.log(this.articleList);
       });
     },
   },
@@ -43,7 +46,7 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/common.scss";
 .indexPage {
-  min-width: 100%;
+  min-width: fit-content;
   min-height: 100%;
   display: flex;
   gap: 20px;
@@ -51,7 +54,6 @@ export default {
   align-items: flex-start;
   padding: 20px;
   background-color: #e6f5ff;
-
   .left-side {
     display: flex;
     justify-content: center;
@@ -64,6 +66,7 @@ export default {
     min-height: 360vh;
     height: fit-content;
     min-width: 600px;
+    max-width: 800px;
     @include commonBox;
     & > div {
       padding: 5px 0;
