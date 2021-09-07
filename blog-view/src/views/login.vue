@@ -92,32 +92,38 @@ export default {
           this.isImgShow = true;
         });
     },
+    // 登录
     login() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
+          // 加密
           let loginData = Encrypt(JSON.stringify(this.ruleForm));
           login({ loginData }).then((res) => {
             if (res.data.code === 1) {
+              // 登录成功后获取token
               sessionStorage.token = res.data.token;
               this.$notify({
                 message: res.data.msg,
                 type: "success",
               });
+              // 自动跳转到主页
               this.$router.push("/home");
             } else if (res.data.code === 0) {
+              // 重新获取验证码图片
               this.getCaptcha();
               this.$notify.error({
                 message: res.data.msg,
               });
             }
           });
-          console.log(loginData);
         }
       });
     },
+    // 重置表单
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+    // 获取背景图片
     getBCG() {
       getBCG()
         .then((response) => {
@@ -138,7 +144,7 @@ export default {
     },
   },
   created() {
-    console.log();
+    // 验证是否已经登录
     if (sessionStorage.token != undefined) {
       this.$router.replace("/home");
     }
@@ -160,11 +166,7 @@ export default {
   justify-content: center;
   .login {
     flex: 1;
-    // transition: all 1s;
-    transform: translateY(-30%);
-    // max-width: 20vw;
-    // margin: 0 4vw;
-    // padding: 0 4vw;
+    transform: translateY(-20%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -173,9 +175,9 @@ export default {
       min-width: 350px;
       max-height: 50vh;
       margin: 0 20px;
-      // overflow: auto;
-      // margin: 0 auto;
+
       @include commonBox;
+
       .verification ::v-deep .el-form-item__content {
         display: flex;
         align-items: center;
@@ -213,7 +215,6 @@ export default {
   }
   .img {
     width: 0vw;
-
     height: 100vh;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     & > img {
