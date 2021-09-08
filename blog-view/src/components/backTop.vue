@@ -13,6 +13,7 @@ export default {
     return {
       isShow: false,
       scrollH: 1000,
+      isScroll: false,
     };
   },
   computed: {},
@@ -20,10 +21,13 @@ export default {
   methods: {
     backToTop() {
       let timer = setInterval(() => {
+        this.isScroll = true;
         document.documentElement.scrollTop -=
-          document.documentElement.scrollTop / 20;
-        if (parseInt(document.documentElement.scrollTop) == 0)
+          document.documentElement.scrollTop / 10;
+        if (parseInt(document.documentElement.scrollTop) == 0) {
           clearInterval(timer);
+          this.isScroll = false;
+        }
       }, 1);
     },
   },
@@ -33,6 +37,14 @@ export default {
       this.isShow =
         document.documentElement.scrollTop > this.scrollH ? true : false;
     });
+    // 返回顶部过程中组织滚轮默认事件
+    window.addEventListener(
+      "mousewheel",
+      (e) => {
+        if (this.isScroll) e.preventDefault();
+      },
+      { passive: false }
+    );
   },
 };
 </script>

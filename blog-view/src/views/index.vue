@@ -1,7 +1,7 @@
 <template>
-  <div class="indexPage">
+  <div class="indexPage" :class="{ isReady: isReady }">
     <div class="left-side">
-      <img src="@/assets/images/logo.png" alt="" />
+      <!-- <img src="@/assets/images/logo.png" alt="" /> -->
     </div>
     <div class="trend">
       <div v-for="(item, index) in articleList" :key="index">
@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       articleList: "",
+      isReady: false,
     };
   },
   computed: {},
@@ -34,6 +35,7 @@ export default {
     getText() {
       getText().then((res) => {
         this.articleList = res.data.articleList;
+        this.isReady = true;
       });
     },
   },
@@ -53,7 +55,9 @@ export default {
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
-  background-color: #e6f5ff;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+
   .left-side {
     display: flex;
     justify-content: center;
@@ -81,5 +85,8 @@ export default {
     min-width: 260px;
     @include commonBox;
   }
+}
+.isReady {
+  opacity: 1;
 }
 </style>
