@@ -48,9 +48,7 @@ export default {
   },
 };
 </script>
-<style lang='scss' scoped>
-@import "~@/assets/scss/common.scss";
-
+<style lang="scss" scoped>
 .backTop {
   padding: 10px;
   width: 40px;

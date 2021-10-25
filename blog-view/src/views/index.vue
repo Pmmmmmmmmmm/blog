@@ -1,12 +1,13 @@
 <template>
   <div class="indexPage" :class="{ isReady: isReady }">
+    <header-bar />
     <div class="left-side">
       <!-- <img src="@/assets/images/logo.png" alt="" /> -->
     </div>
     <div class="trend">
       <div v-for="(item, index) in articleList" :key="index">
         <h3>{{ item.title }}</h3>
-        <div>{{ item.content }}</div>
+        <p>{{ item.content }}</p>
       </div>
     </div>
     <div class="right-side"></div>
@@ -16,12 +17,14 @@
 <script>
 import { getText } from "@/api/index.js";
 import backTop from "@/components/backTop.vue";
+import HeaderBar from "../components/headerBar.vue";
 
 export default {
   name: "indexPage",
   props: {},
   components: {
     backTop,
+    HeaderBar,
   },
   data() {
     return {
@@ -47,6 +50,29 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "~@/assets/scss/common.scss";
+@media screen and (max-width: 700px) {
+  .indexPage {
+    .left-side,
+    .right-side {
+      display: none !important;
+    }
+  }
+}
+@media screen and (max-width: 1200px) {
+  .indexPage {
+    .right-side {
+      display: none !important;
+    }
+  }
+}
+// @media screen and (max-width: 800px) {
+//   .indexPage {
+//     .left-side,
+//     .right-side {
+//       display: none !important;
+//     }
+//   }
+// }
 .indexPage {
   min-width: fit-content;
   min-height: 100%;
@@ -54,7 +80,7 @@ export default {
   gap: 20px;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
+  padding: 50px 20px 20px 20px;
   transition: opacity 0.2s ease;
   opacity: 0;
 
@@ -67,14 +93,16 @@ export default {
     @include commonBox;
   }
   .trend {
-    min-height: 360vh;
+    // min-height: 360vh;
+    flex: 1;
     height: fit-content;
-    min-width: 600px;
+    // min-width: 600px;
     max-width: 800px;
     @include commonBox;
     & > div {
       padding: 5px 0;
       border-bottom: 1px solid #e9e9eb;
+      word-break: break-all;
       &:first-child {
         padding: 0 0 5px 0;
       }

@@ -145,6 +145,7 @@ export default {
   },
   created() {
     // 验证是否已经登录
+
     if (sessionStorage.token != undefined) {
       this.$router.replace("/home");
     }

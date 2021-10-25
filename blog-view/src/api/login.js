@@ -24,7 +24,7 @@ export function getCaptcha() {
 }
 export function getBCG() {
   return axios({
-    url: "https://source.unsplash.com/1200x750/?code",
+    url: "https://source.unsplash.com/1200x750/?coding",
     method: "get",
     responseType: "arraybuffer",
   });

@@ -6,6 +6,10 @@
 * {
   box-sizing: border-box;
 }
+/* 隐藏滚动条 */
+::-webkit-scrollbar {
+  width: 0 !important;
+}
 
 #app {
   /* font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif; */
@@ -14,6 +18,9 @@
     Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: fit-content;
+  min-width: 100%;
+  min-height: 100vh;
   background-color: #e6f5ff;
 }
 </style>
