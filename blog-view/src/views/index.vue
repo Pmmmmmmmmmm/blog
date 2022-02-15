@@ -2,7 +2,7 @@
   <div class="indexPage" :class="{ isReady: isReady }">
     <header-bar />
     <div class="left-side">
-      <!-- <img src="@/assets/images/logo.png" alt="" /> -->
+      <img src="@/assets/images/logo.png" alt="" />
     </div>
     <div class="trend">
       <div v-for="(item, index) in articleList" :key="index">
@@ -85,6 +85,8 @@ export default {
   opacity: 0;
 
   .left-side {
+    position: sticky;
+   top: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -108,7 +110,8 @@ export default {
       }
     }
   }
-  .right-side {
+  .right-side {  position: sticky;
+   top: 50px;
     min-height: 40vh;
     min-width: 260px;
     @include commonBox;
