@@ -174,7 +174,6 @@ export default {
     .demo-ruleForm {
       max-width: 20vw;
       min-width: 350px;
-      max-height: 50vh;
       margin: 0 20px;
 
       @include commonBox;
@@ -215,8 +214,9 @@ export default {
     }
   }
   .img {
-    width: 0vw;
+    width: 0%;
     height: 100vh;
+    overflow: hidden;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     & > img {
       width: fit-content;
@@ -224,7 +224,7 @@ export default {
     }
   }
   .isShow {
-    width: 72vw;
+    width: 72%;
     transition: width 1s ease;
   }
 }
